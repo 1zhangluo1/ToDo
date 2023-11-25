@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <group android:checkableBehavior="single">
+
+        <item
+            android:id="@+id/change_name"
+            android:title="修改昵称"
+            android:icon="@drawable/ic_changename"/>
+
+        <item
+            android:id="@+id/sign"
+            android:title="个性签名"
+            android:icon="@drawable/ic_sign"/>
+
+        <item
+            android:id="@+id/change_pass"
+            android:title="修改密码"
+            android:icon="@drawable/ic_changepass"/>
+
+        <item
+            android:id="@+id/back_login"
+            android:title="退出登录"
+            android:icon="@drawable/ic_backlogin"/>
+
+        <item
+            android:id="@+id/destroy_account"
+            android:title="注销账号"
+            android:icon="@drawable/ic_destroy_account"/>
+
+        <item
+            android:id="@+id/introduce"
+            android:title="应用说明"
+            android:icon="@drawable/ic_helper"/>
+    </group>
+
+</menu>

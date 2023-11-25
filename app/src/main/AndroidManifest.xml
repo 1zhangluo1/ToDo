@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
+
+    <application
+        android:name="org.litepal.LitePalApplication"
+        android:allowBackup="true"
+        android:dataExtractionRules="@xml/data_extraction_rules"
+        android:fullBackupContent="@xml/backup_rules"
+        android:icon="@drawable/ic_app"
+        android:label="待办事项"
+        android:roundIcon="@drawable/ic_app"
+        android:supportsRtl="true"
+        android:theme="@style/Theme.NeedToDo"
+        tools:targetApi="31">
+        <activity
+            android:name=".Introduce"
+            android:exported="false" />
+        <activity
+            android:name=".OutDateList"
+            android:exported="false" />
+        <activity
+            android:name=".TopAndDone"
+            android:exported="false"
+            android:label="选择你的操作:"
+            android:theme="@style/Theme.AppCompat.DayNight.Dialog" />
+        <activity
+            android:name=".DestroyAccount"
+            android:exported="false"
+            android:label="确定要注销吗?"
+            android:theme="@style/Theme.AppCompat.DayNight.Dialog" />
+        <activity
+            android:name=".EditSign"
+            android:exported="false"
+            android:label="编辑个性签名"
+            android:theme="@style/Theme.AppCompat.DayNight.Dialog" />
+        <activity
+            android:name=".ChangeName"
+            android:exported="false"
+            android:label="修改昵称"
+            android:theme="@style/Theme.AppCompat.DayNight.Dialog" />
+        <activity
+            android:name=".Login"
+            android:exported="false" />
+        <activity
+            android:name=".DoneList"
+            android:exported="false" />
+        <activity
+            android:name=".SetTime"
+            android:exported="false" />
+        <activity
+            android:name=".QueryAndChange"
+            android:exported="false" />
+        <activity
+            android:name=".AddThingList"
+            android:exported="false" />
+        <activity
+            android:name=".ChangePass"
+            android:exported="false"
+            android:label="修改密码"
+            android:theme="@style/Theme.AppCompat.Dialog" />
+        <activity
+            android:name=".Register"
+            android:exported="false" />
+        <activity
+            android:name=".MainActivity"
+            android:exported="false" />
+        <activity
+            android:name=".WelcomeActivity"
+            android:configChanges="orientation|screenSize|keyboardHidden"
+            android:exported="true"
+            android:launchMode="singleTop">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+    </application>
+
+</manifest>

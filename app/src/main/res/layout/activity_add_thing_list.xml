@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:id="@+id/addAdd"
+    android:orientation="vertical"
+    android:background="#F5F7F8">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:background="#C5C7C8"
+        android:text="不要忘记该做的事~~~"
+        android:textSize="17dp"
+        android:textColor="#150602"
+        android:padding="10dp"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="left"
+        android:text="设置标题："
+        android:textSize="20dp"
+        android:textColor="@color/black"
+        android:paddingTop="10sp"
+        android:paddingLeft="10dp"/>
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:maxLines="2"
+        android:id="@+id/add_headline"
+        android:hint="标题"
+        android:layout_margin="10dp" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="left"
+        android:text="添加任务："
+        android:textSize="20dp"
+        android:textColor="@color/black"
+        android:paddingLeft="10dp"/>
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:maxLines="5"
+        android:id="@+id/add_thing"
+        android:hint="输入你的任务"
+        android:layout_margin="10dp" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="left"
+        android:text="截止日期："
+        android:textSize="20dp"
+        android:textColor="@color/black"
+        android:paddingLeft="10dp"
+        android:paddingTop="50dp"/>
+<RelativeLayout
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content">
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/fill_deadline"
+        android:layout_marginTop="30dp"
+        android:hint="请按提示规范设置日期"
+        android:layout_margin="10dp"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignRight="@+id/fill_deadline"
+        android:text="点击选择日期"
+        android:layout_alignBaseline="@+id/fill_deadline"
+        android:id="@+id/choose_deadline"/>
+</RelativeLayout>
+<RelativeLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <Button
+        android:layout_width="100dp"
+        android:layout_height="50dp"
+        android:layout_gravity="center_horizontal"
+        android:text="OK"
+        android:textSize="20dp"
+        android:background="@drawable/button"
+        android:id="@+id/add_yes"
+        android:layout_marginBottom="40dp"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true" />
+    </RelativeLayout>
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:padding="8dp">
+        <DatePicker
+            android:id="@+id/date_picker1"
+            android:calendarViewShown="false"
+            android:datePickerMode="spinner"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
+
+</LinearLayout>
