@@ -1,13 +1,14 @@
 package com.example.needtodo;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.ImageView;
+import android.view.Window;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -15,12 +16,14 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
+import androidx.core.view.WindowCompat;
+import androidx.core.view.WindowInsetsControllerCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.lifecycle.LifecycleObserver;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
+import androidx.viewpager2.widget.ViewPager2;
 
+import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.android.material.navigation.NavigationBarView;
 import com.google.android.material.navigation.NavigationView;
 
 import org.greenrobot.eventbus.EventBus;
@@ -28,41 +31,25 @@ import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 import org.litepal.LitePal;
 
-import java.util.ArrayList;
-import java.util.List;
-
 public class MainActivity extends BaseActivity implements LifecycleObserver {
 
     private DrawerLayout mDrawerLayout;
-    private List<ToDoList> toDoListList = new ArrayList<>();
-    private ToDoListAdapter toDoListAdapter;
-    private ImageView setTime;
-    private ImageView outDate;
     private NavigationView navigationView;
-    private ImageView refresh;
-    private ImageView doneList;
     private TextView user_name;
     private TextView user_account;
     private TextView sign;
-    private SwipeRefreshLayout swipeRefreshLayout;
-    private RecyclerView recyclerView;
+    private BottomNavigationView bottomNavigationView;
+    private ViewPager2 viewPager2;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         EventBus.getDefault().register(this);
-        initNavMenu();
-        initSetTime();
-        initOutDate();
-        initDoneList();
-        initToDoLists();
-        initRefresh();
-        recyclerView = (RecyclerView) findViewById(R.id.todo_list);
-        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
-        recyclerView.setLayoutManager(linearLayoutManager);
-        ToDoListAdapter adapter = new ToDoListAdapter(toDoListList);
-        recyclerView.setAdapter(adapter);
+        adapterToolbar();//将顶部导航栏颜色设为和toolbar一致，看起来更加协调
+        initNavMenu();//设置侧滑菜单的点击事件
+        viewPaperFragment();
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -70,17 +57,6 @@ public class MainActivity extends BaseActivity implements LifecycleObserver {
         if (actionBar != null) {
             actionBar.setDisplayHomeAsUpEnabled(true);
             actionBar.setHomeAsUpIndicator(R.drawable.ic_menu);
-        }
-    }
-
-    private void initToDoLists() {
-        toDoListList.clear();
-        User this_account = LitePal.select("id").where("online = ?", String.valueOf(1)).findFirst(User.class);
-        long user_id = this_account.getId();
-        List<ThingsList> things = LitePal.where("user_id = ? and isDone = ? and isOutDate = ?",String.valueOf(user_id),String.valueOf(0),String.valueOf(0)).find(ThingsList.class);
-        for (ThingsList contents : things) {
-            ToDoList add = new ToDoList(contents.getHeadline(), R.drawable.ic_todo, contents.getDeadline(), contents.getId());
-            toDoListList.add(add);
         }
     }
 
@@ -140,9 +116,9 @@ public class MainActivity extends BaseActivity implements LifecycleObserver {
         user_account.setText(user_information.getAccount().toString());
         navigationView.setNavigationItemSelectedListener(item -> {
             if (item.getItemId() == R.id.back_login) {
-                User backLogin= LitePal.where("online = ?",String.valueOf(1)).findFirst(User.class);
+                User backLogin = LitePal.where("online = ?", String.valueOf(1)).findFirst(User.class);
                 backLogin.setToDefault("online");
-                backLogin.updateAll("online = ?",String.valueOf(1));
+                backLogin.updateAll("online = ?", String.valueOf(1));
                 Intent intent = new Intent(MainActivity.this, Login.class);
                 startActivity(intent);
                 Toast.makeText(MainActivity.this, "成功返回退出账号", Toast.LENGTH_SHORT).show();
@@ -160,73 +136,11 @@ public class MainActivity extends BaseActivity implements LifecycleObserver {
                 Intent intent = new Intent(MainActivity.this, DestroyAccount.class);
                 startActivity(intent);
             } else if (item.getItemId() == R.id.introduce) {
-                Intent intent = new Intent(MainActivity.this,Introduce.class);
+                Intent intent = new Intent(MainActivity.this, Introduce.class);
                 startActivity(intent);
             }
             return false;
         });
-    }
-
-    private void initSetTime() {
-        setTime = (ImageView) findViewById(R.id.set_time);
-        setTime.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this, SetTime.class);
-                startActivity(intent);
-            }
-        });
-    }
-
-    private void initOutDate() {
-        outDate = findViewById(R.id.enter_outDate);
-        outDate.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this, OutDateList.class);
-                startActivity(intent);
-            }
-        });
-    }
-
-    private void initDoneList() {
-        doneList = findViewById(R.id.had_done);
-        doneList.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this, DoneList.class);
-                startActivity(intent);
-            }
-        });
-    }
-
-    private void initRefresh() {
-        swipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.swipe_refresh);
-        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-            @Override
-            public void onRefresh() {
-                refreshThings();
-            }
-        });
-    }
-    private void refreshThings() {
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                try {
-                    Thread.sleep(1000);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-                runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        initToDoLists();
-                        swipeRefreshLayout.setRefreshing(false);
-                    }
-                });
-            }
-        }).start();
     }
 
     @Override
@@ -234,6 +148,7 @@ public class MainActivity extends BaseActivity implements LifecycleObserver {
         super.onDestroy();
         EventBus.getDefault().unregister(this);
     }
+
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onMessageEvent(MessageEvent message) {
         Toast.makeText(this, message.name, Toast.LENGTH_SHORT).show();
@@ -253,12 +168,64 @@ public class MainActivity extends BaseActivity implements LifecycleObserver {
         TextView sign = navigationView.getHeaderView(0).findViewById(R.id.sign_content);
         if (user_information.getSign() != null) {
             sign.setText(user_information.getSign().toString());
+        } else if (user_information.getSign() == null) {
         }
     }
+
     public void changeName() {
         NavigationView navigationView = findViewById(R.id.nav_view);
         User user_information = LitePal.where("online = ?", String.valueOf(1)).findFirst(User.class);
         TextView user_name = navigationView.getHeaderView(0).findViewById(R.id.user_name);
         user_name.setText(user_information.getName().toString());
+    }
+
+    private void adapterToolbar() {
+        View decorView = getWindow().getDecorView();
+        int uiOptions = View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
+                | View.SYSTEM_UI_FLAG_FULLSCREEN;
+        decorView.setSystemUiVisibility(uiOptions);
+        decorView.setFitsSystemWindows(false);
+        Window window = getWindow();
+        window.setStatusBarColor(Color.parseColor("#80D8FF"));
+        WindowInsetsControllerCompat c = WindowCompat.getInsetsController(window, window.getDecorView());
+        c.setAppearanceLightStatusBars(false);
+        c.setAppearanceLightNavigationBars(false);
+    }
+
+    private void viewPaperFragment() {
+        viewPager2 = findViewById(R.id.viewpager2bottom);
+        bottomNavigationView = findViewById(R.id.bottom_nav_view);
+        MyViewPaper2BottomAdapter myViewPaper2BottomAdapter = new MyViewPaper2BottomAdapter(this);
+        viewPager2.setAdapter(myViewPaper2BottomAdapter);
+        bottomNavigationView.setOnItemSelectedListener(new NavigationBarView.OnItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                if (item.getItemId()==R.id.todo_view){
+                    viewPager2.setCurrentItem(0);
+                }
+                else if (item.getItemId()==R.id.enter_out){
+                    viewPager2.setCurrentItem(1);
+                }
+                else if (item.getItemId()==R.id.enter_done){
+                    viewPager2.setCurrentItem(2);
+                }
+                return true;
+            }
+        });
+        viewPager2.registerOnPageChangeCallback(new ViewPager2.OnPageChangeCallback() {
+            @Override
+            public void onPageSelected(int position) {
+                super.onPageSelected(position);
+                if (position==0){
+                    bottomNavigationView.setSelectedItemId(R.id.todo_view);
+                }
+                else if (position==1){
+                    bottomNavigationView.setSelectedItemId(R.id.enter_out);
+                }
+                else if (position==2){
+                    bottomNavigationView.setSelectedItemId(R.id.enter_done);
+                }
+            }
+        });
     }
 }

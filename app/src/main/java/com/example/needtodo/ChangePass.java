@@ -1,7 +1,5 @@
 package com.example.needtodo;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -31,6 +29,7 @@ public class ChangePass extends BaseActivity {
                 if(password.getPassword().equals(prePassword) && newPassword.isEmpty() == false){
                     User update = new User();
                     update.setPassword(newPassword);
+                    update.setToDefault("online");
                     update.updateAll("account = ?",password.getAccount());
                     Toast.makeText(ChangePass.this, "修改成功", Toast.LENGTH_SHORT).show();
                     ActivityCollector.finishAll();

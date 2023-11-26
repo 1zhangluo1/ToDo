@@ -3,102 +3,55 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/drawer_layout"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
-
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="false"
+    android:background="#80D8FF">
     <RelativeLayout
+        android:fitsSystemWindows="false"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="#F5F6F6">
+        android:background="#E2E6E6">
+
 
         <androidx.appcompat.widget.Toolbar
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
-            android:background="#28ABED"
+            android:background="#80D8FF"
             android:popupTheme="@style/ThemeOverlay.AppCompat.Light"
             android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar" />
-
-        <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
-            android:id="@+id/swipe_refresh"
+        <FrameLayout
+            android:id="@+id/diff_lists"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_below="@+id/toolbar"
-            app:layout_behavior="@string/appbar_scrolling_view_behavior">
+            android:layout_above="@+id/bottom_nav_view"/>
 
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/todo_list"
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_above="@id/bottom_nav_view"
+            android:layout_alignParentRight="true"
+            android:id="@+id/fab"
+            android:src="@drawable/ic_search"
+            android:layout_margin="16dp"
+            android:clickable="true"
+            app:backgroundTint="#9FD6EF"
+            app:elevation="10dp" />
+
+            <com.google.android.material.bottomnavigation.BottomNavigationView
+                android:id="@+id/bottom_nav_view"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_below="@id/toolbar" />
-        </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
-
-        <Space
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:background="#9FD6EF"
+                app:menu="@menu/bottom_menu" />
+        <androidx.viewpager2.widget.ViewPager2
+            android:id="@+id/viewpager2bottom"
             android:layout_width="match_parent"
-            android:layout_height="70dp" />
-
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="60dp"
-            android:layout_alignParentBottom="true"
-            android:background="#DFE4E3"
-            android:orientation="horizontal">
-
-            <ImageView
-                android:id="@+id/set_time"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="20dp"
-                android:layout_marginBottom="20dp"
-                android:background="@drawable/ic_setime" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentBottom="true"
-                android:layout_marginLeft="22dp"
-                android:layout_marginBottom="5dp"
-                android:text="番茄钟"
-                android:textSize="12dp" />
-
-            <ImageView
-                android:id="@+id/enter_outDate"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerHorizontal="true"
-                android:layout_marginTop="5dp"
-                android:background="@drawable/ic_outdate" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentBottom="true"
-                android:layout_centerHorizontal="true"
-                android:layout_marginBottom="5dp"
-                android:text="已截止"
-                android:textSize="12dp" />
-
-            <ImageView
-                android:id="@+id/had_done"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
-                android:layout_marginTop="11dp"
-                android:layout_marginRight="25dp"
-                android:background="@drawable/ic_done" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
-                android:layout_alignParentBottom="true"
-                android:layout_marginRight="20dp"
-                android:layout_marginBottom="5dp"
-                android:text="已完成"
-                android:textSize="12dp" />
-
-        </RelativeLayout>
-
-
+            android:layout_height="match_parent"
+            android:layout_below="@+id/toolbar"
+            android:layout_above="@+id/bottom_nav_view"/>
     </RelativeLayout>
 
     <com.google.android.material.navigation.NavigationView
@@ -108,6 +61,7 @@
         android:layout_gravity="start"
         app:headerLayout="@layout/nav_header"
         app:menu="@menu/nav_menu" />
+
 
 </androidx.drawerlayout.widget.DrawerLayout>
 

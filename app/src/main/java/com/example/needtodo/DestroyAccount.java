@@ -31,6 +31,7 @@ public class DestroyAccount extends AppCompatActivity implements View.OnClickLis
             Intent intent1 = new Intent(DestroyAccount.this, Login.class);
             startActivity(intent1);
             Toast.makeText(this, "注销成功", Toast.LENGTH_SHORT).show();
+            finish();
         }
         else if (view.getId()==R.id.destroy_no){
             finish();

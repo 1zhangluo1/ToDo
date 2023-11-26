@@ -1,13 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
-    <TextView
-        android:layout_width="wrap_content"
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/test"
+        android:layout_above="@+id/bottom_nav_view"/>
+
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:id="@+id/bottom_nav_view"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/long_touch"
-        android:text="长按"
-        android:gravity="center"
-        android:textSize="30dp"/>
-</LinearLayout>
+        android:background="#9FD6EF"
+        android:layout_alignParentBottom="true"
+        app:menu="@menu/bottom_menu" />
+
+</RelativeLayout>

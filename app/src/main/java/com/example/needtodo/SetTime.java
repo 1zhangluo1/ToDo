@@ -1,27 +1,36 @@
 package com.example.needtodo;
 
 import android.os.Bundle;
-import android.view.View;
-import android.widget.TextView;
-import android.widget.Toast;
+
+import androidx.fragment.app.FragmentTransaction;
+
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 public class SetTime extends BaseActivity {
+
+    private BottomNavigationView bottomNavigationView;
+    private OutList outList;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_set_time);
-        TextView textView = (TextView) findViewById(R.id.long_touch);
-        textView.setOnLongClickListener(new View.OnLongClickListener() {
-            @Override
-            public boolean onLongClick(View v) {
-                try{
-                    Toast.makeText(SetTime.this, "成功长按事件", Toast.LENGTH_SHORT).show();
-                }
-                catch(Exception e){
-                    Toast.makeText(getApplicationContext(), "背景设置失败！",Toast.LENGTH_LONG).show();
-                }
-                return true;
-            }
-        });
+
+    }
+    private void bottomNavi(int position) {
+        bottomNavigationView = findViewById(R.id.bottom_nav_view);
+        FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+        hideFragment(fragmentTransaction);
+        if (position==1){
+            if (outList==null){
+                outList = new OutList();
+                fragmentTransaction.add(R.id.todo_list,outList);}
+            else {fragmentTransaction.show(outList);}}
+        fragmentTransaction.commit();
+    }
+    private void hideFragment(FragmentTransaction fragmentTransaction) {
+        if (outList!=null){
+            fragmentTransaction.hide(outList);
+        }
+
     }
 }
