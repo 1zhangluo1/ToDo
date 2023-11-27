@@ -18,15 +18,16 @@ public class ToDoListAdapter extends RecyclerView.Adapter<ToDoListAdapter.ViewHo
 
     private List<ToDoList> mToDoList;
     static class ViewHolder extends RecyclerView.ViewHolder{
-        LinearLayout listSquare;
         ImageView thingImage;
+        ImageView background;
         TextView thing;
         TextView deadline;
         View todolistView;
+        LinearLayout linearLayout;
 
         public  ViewHolder(View view){
             super(view);
-            LinearLayout linearLayout = (LinearLayout) view.findViewById(R.id.listSquare);
+            linearLayout = (LinearLayout) view.findViewById(R.id.listSquare);
             todolistView = view;
             thing = (TextView) view.findViewById(R.id.todolist_name);
             thingImage = (ImageView) view.findViewById(R.id.todolist_image);

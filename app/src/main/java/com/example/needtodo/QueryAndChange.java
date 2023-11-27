@@ -9,6 +9,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import org.greenrobot.eventbus.EventBus;
 import org.litepal.LitePal;
 
 import java.util.Objects;
@@ -49,10 +50,8 @@ public class QueryAndChange extends BaseActivity {
             @Override
             public void onClick(View v) {
                 LitePal.deleteAll(ThingsList.class,"id = ?",String.valueOf(toDoList.getId()));
-                Toast.makeText(QueryAndChange.this, "删除成功", Toast.LENGTH_SHORT).show();
-                ActivityCollector.finishAll();
-                Intent intent = new Intent(QueryAndChange.this, MainActivity.class);
-                startActivity(intent);
+                EventBus.getDefault().post(new UpdateList("删除成功"));
+                finish();
             }
         });
         save = findViewById(R.id.save_new);

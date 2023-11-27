@@ -7,7 +7,24 @@ public class ToDoList implements Parcelable {
     private String thing;
     private int imageID;
     private String deadline;
+    private int backImage;
     private long id;
+
+    public ToDoList(String thing, int imageID, String deadline, int backImage, long id) {
+        this.thing = thing;
+        this.imageID = imageID;
+        this.deadline = deadline;
+        this.backImage = backImage;
+        this.id = id;
+    }
+
+    public int getBackImage() {
+        return backImage;
+    }
+
+    public void setBackImage(int backImage) {
+        this.backImage = backImage;
+    }
 
     public long getId() {
         return id;
