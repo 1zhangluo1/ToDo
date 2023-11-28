@@ -11,7 +11,7 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="60dp"
-        android:background="#80D8FF"
+        android:background="#42BCF3"
         android:text="不要忘记该做的事~~~"
         android:textSize="17dp"
         android:textColor="@color/white"

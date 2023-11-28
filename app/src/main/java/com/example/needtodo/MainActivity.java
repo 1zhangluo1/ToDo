@@ -186,7 +186,7 @@ public class MainActivity extends BaseActivity implements LifecycleObserver {
         decorView.setSystemUiVisibility(uiOptions);
         decorView.setFitsSystemWindows(false);
         Window window = getWindow();
-        window.setStatusBarColor(Color.parseColor("#80D8FF"));
+        window.setStatusBarColor(Color.parseColor("#2CBAF8"));
         WindowInsetsControllerCompat c = WindowCompat.getInsetsController(window, window.getDecorView());
         c.setAppearanceLightStatusBars(false);
         c.setAppearanceLightNavigationBars(false);

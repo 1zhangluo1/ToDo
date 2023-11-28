@@ -9,5 +9,9 @@
         <item name="android:navigationBarColor">@android:color/transparent</item>
     </style>
 
+    <style name="footButton" parent="Theme.AppCompat.Light">
+        <item name="colorPrimary">#0CAFF6</item>
+    </style>
+
     <style name="Theme.NeedToDo" parent="Theme.MaterialComponents.DayNight.NoActionBar.Bridge" />
 </resources>

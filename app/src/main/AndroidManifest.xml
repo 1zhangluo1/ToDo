@@ -16,10 +16,15 @@
         android:theme="@style/Theme.NeedToDo"
         tools:targetApi="31">
         <activity
-            android:name=".Introduce"
+            android:name=".SelectTime"
+            android:exported="false"
+            android:label="选取时间："
+            android:theme="@style/Theme.AppCompat.DayNight.Dialog"/>
+        <activity
+            android:name=".TomatoClock"
             android:exported="false" />
         <activity
-            android:name=".OutDateList"
+            android:name=".Introduce"
             android:exported="false" />
         <activity
             android:name=".TopAndDone"
@@ -43,9 +48,6 @@
             android:theme="@style/Theme.AppCompat.DayNight.Dialog" />
         <activity
             android:name=".Login"
-            android:exported="false" />
-        <activity
-            android:name=".DoneList"
             android:exported="false" />
         <activity
             android:name=".SetTime"
