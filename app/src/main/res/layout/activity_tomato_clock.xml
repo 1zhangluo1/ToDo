@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:id="@+id/tomato_mainRelative">
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/tomato_back"
+        android:background="@drawable/ic_back"
+        android:layout_marginLeft="15dp"/>
+
+    <TextView
+        android:id="@+id/hint_word"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="正专注于："
+        android:textSize="20dp"
+        android:letterSpacing="0.1"
+        android:textColor="@color/black"
+        android:layout_marginTop="40dp"
+        android:layout_marginLeft="70dp"/>
+
+    <TextView
+        android:id="@+id/focus_thing"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="20dp"
+        android:letterSpacing="0.1"
+        android:layout_below="@+id/hint_word"
+        android:textColor="@color/black"
+        android:layout_marginLeft="70dp"
+        android:layout_marginTop="20dp"/>
+
+    <ImageView
+        android:id="@+id/clock"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="140dp"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@+id/focus_thing"
+        android:background="@drawable/ic_circle"/>
+
+    <TextView
+        android:id="@+id/countdown"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="设置时间"
+        android:textSize="50dp"
+        android:textColor="@color/black"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="355dp"/>
+
+    <ImageView
+        android:id="@+id/stopOrResume"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/clock"
+        android:layout_marginTop="100dp"
+        android:layout_marginLeft="140dp"/>
+
+    <ImageView
+        android:id="@+id/skip"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="250dp"
+        android:layout_below="@+id/clock"
+        android:layout_marginTop="100dp"
+        android:background="@drawable/ic_skip"/>
+
+
+
+
+
+
+</RelativeLayout>
