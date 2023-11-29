@@ -1,6 +1,7 @@
 package com.example.needtodo;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,6 +19,7 @@ import org.litepal.LitePal;
 
 import java.util.ArrayList;
 import java.util.List;
+
 public class ToDo extends Fragment {
     private List<ToDoList> toDoListList = new ArrayList<>();
     private ToDoListAdapter toDoListAdapter;
@@ -73,28 +75,38 @@ public class ToDo extends Fragment {
         toDoListList.clear();
         User this_account = LitePal.select("id").where("online = ?", String.valueOf(1)).findFirst(User.class);
         long user_id = this_account.getId();
-        List<ThingsList> topThings = LitePal.where("user_id = ? and isDone = ? and isOutDate = ? and setTop =?",String.valueOf(user_id), String.valueOf(0), String.valueOf(0),String.valueOf(1)).find(ThingsList.class);
+        List<ThingsList> topThings = LitePal.where("user_id = ? and isDone = ? and isOutDate = ? and setTop =?", String.valueOf(user_id), String.valueOf(0), String.valueOf(0), String.valueOf(1)).find(ThingsList.class);
         for (ThingsList tops : topThings) {
             ToDoList top = new ToDoList(tops.getHeadline(), R.drawable.ic_todo, tops.getDeadline(), tops.getId());
             toDoListList.add(top);
         }
-        List<ThingsList> things = LitePal.where("user_id = ? and isDone = ? and isOutDate = ? and setTop =?", String.valueOf(user_id), String.valueOf(0), String.valueOf(0),String.valueOf(0)).find(ThingsList.class);
+        List<ThingsList> things = LitePal.where("user_id = ? and isDone = ? and isOutDate = ? and setTop =?", String.valueOf(user_id), String.valueOf(0), String.valueOf(0), String.valueOf(0)).find(ThingsList.class);
         for (ThingsList contents : things) {
             ToDoList add = new ToDoList(contents.getHeadline(), R.drawable.ic_todo, contents.getDeadline(), contents.getId());
             toDoListList.add(add);
         }
     }
+
     private void loadList() {
         recyclerView = (RecyclerView) this.view.findViewById(R.id.todo_list);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         ToDoListAdapter adapter = new ToDoListAdapter(toDoListList);
         recyclerView.setAdapter(adapter);
+        User this_account = LitePal.select("id").where("online = ?", String.valueOf(1)).findFirst(User.class);
+        long user_id = this_account.getId();
+        ThingsList thingsList = LitePal.where("user_id = ? and isDone = ? and isOutDate = ?", String.valueOf(user_id), String.valueOf(0), String.valueOf(0)).findFirst(ThingsList.class);
+        if (thingsList == null) {
+            Log.d("tag", "确实为空");
+            recyclerView.setBackgroundResource(R.drawable.empty_data);
+        }
     }
+
     @Override
     public void onDestroyView() {
         super.onDestroyView();
         EventBus.getDefault().unregister(this);
     }
+
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onMessageEvent(UpdateList messageEvent) {
         initToDoLists();
