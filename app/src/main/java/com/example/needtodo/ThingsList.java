@@ -11,7 +11,15 @@ public class ThingsList extends LitePalSupport {
     private String headline;
     private String deadline;
     private boolean isOutDate;
+    private String type;
 
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
     public boolean isOutDate() {
         return isOutDate;
     }

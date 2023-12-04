@@ -42,27 +42,21 @@ public class TopAndDone extends AppCompatActivity {
             topAndCancel = findViewById(R.id.topOrCancel);
             topAndCancel.setText("取消置顶");
             setTop = findViewById(R.id.set_top);
-            setTop.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    topOrCancel.setToDefault("setTop");
-                    topOrCancel.updateAll("id = ?",String.valueOf(id));
-                    EventBus.getDefault().post(new UpdateList("已取消置顶"));
-                    finish();
-                }
+            setTop.setOnClickListener(v -> {
+                topOrCancel.setToDefault("setTop");
+                topOrCancel.updateAll("id = ?",String.valueOf(id));
+                EventBus.getDefault().post(new UpdateList("已取消置顶"));
+                finish();
             });
         }
         else if (topOrCancel.isSetTop()==false){
             setTop = findViewById(R.id.set_top);
-            setTop.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    ThingsList isTop = LitePal.where("id = ?",String.valueOf(id)).findFirst(ThingsList.class);
-                    isTop.setSetTop(true);
-                    isTop.updateAll("id = ?",String.valueOf(id));
-                    EventBus.getDefault().post(new UpdateList("已成功置顶"));
-                    finish();
-                }
+            setTop.setOnClickListener(v -> {
+                ThingsList isTop = LitePal.where("id = ?",String.valueOf(id)).findFirst(ThingsList.class);
+                isTop.setSetTop(true);
+                isTop.updateAll("id = ?",String.valueOf(id));
+                EventBus.getDefault().post(new UpdateList("已成功置顶"));
+                finish();
             });
         }
     }

@@ -19,4 +19,9 @@
             android:layout_height="match_parent"
             android:layout_below="@id/toolbar" />
     </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/out_empty_background"
+        android:layout_centerInParent="true"/>
 </RelativeLayout>

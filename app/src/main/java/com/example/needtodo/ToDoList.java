@@ -8,7 +8,30 @@ public class ToDoList implements Parcelable {
     private int imageID;
     private String deadline;
     private int backImage;
+    private String backgroundColor;
     private long id;
+
+    public ToDoList(String thing, String deadline, long id) {
+        this.thing = thing;
+        this.deadline = deadline;
+        this.id = id;
+    }
+
+    public ToDoList(String thing, int imageID, String deadline, String backgroundColor, long id) {
+        this.thing = thing;
+        this.imageID = imageID;
+        this.deadline = deadline;
+        this.backgroundColor = backgroundColor;
+        this.id = id;
+    }
+
+    public String getBackgroundColor() {
+        return backgroundColor;
+    }
+
+    public void setBackgroundColor(String backgroundColor) {
+        this.backgroundColor = backgroundColor;
+    }
 
     public ToDoList(String thing, int imageID, String deadline, int backImage, long id) {
         this.thing = thing;

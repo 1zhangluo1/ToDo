@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -24,12 +25,14 @@ public class OutList extends Fragment {
     private SwipeRefreshLayout swipeRefreshLayout;
     private RecyclerView recyclerView;
     private View view;
+    private ImageView imageView;
 
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         this.view = inflater.inflate(R.layout.fragment_out_list, container, false);
+        imageView = this.view.findViewById(R.id.out_empty_background);
         EventBus.getDefault().register(this);
         initOutLists();
         createList();
@@ -43,13 +46,19 @@ public class OutList extends Fragment {
         recyclerView.setLayoutManager(linearLayoutManager);
         DoneAdapter adapter = new DoneAdapter(OutList);
         recyclerView.setAdapter(adapter);
+        User this_account = LitePal.select("id").where("online = ?", String.valueOf(1)).findFirst(User.class);
+        long user_id = this_account.getId();
+        ThingsList thingsList = LitePal.where("user_id = ? and isDone = ? and isOutDate = ?", String.valueOf(user_id), String.valueOf(0), String.valueOf(1)).findFirst(ThingsList.class);
+        if (thingsList == null) {
+            imageView.setImageResource(R.drawable.empty_data);
+        }
     }
 
     private void initOutLists() {
         OutList.clear();
         User this_account = LitePal.select("id").where("online = ?", String.valueOf(1)).findFirst(User.class);
         long user_id = this_account.getId();
-        List<ThingsList> things = LitePal.where("isOutDate = ? and user_id = ?", String.valueOf(1), String.valueOf(user_id)).find(ThingsList.class);
+        List<ThingsList> things = LitePal.where("isOutDate = ? and user_id = ? and isDone = ? ", String.valueOf(1), String.valueOf(user_id),String.valueOf(0)).find(ThingsList.class);
         if (things != null) {
             for (ThingsList contents : things) {
                 ToDoList out = new ToDoList(contents.getHeadline(), R.drawable.icon_outdate, contents.getDeadline(), contents.getId());

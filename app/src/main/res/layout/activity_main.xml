@@ -32,10 +32,10 @@
             android:layout_above="@id/bottom_nav_view"
             android:layout_alignParentRight="true"
             android:id="@+id/fab"
-            android:src="@drawable/ic_search"
+            android:src="@drawable/ic_add"
             android:layout_margin="18dp"
             android:clickable="true"
-            app:backgroundTint="#CED4D6"
+            app:backgroundTint="#46CBF8"
             app:elevation="10dp" />
 
             <com.google.android.material.bottomnavigation.BottomNavigationView

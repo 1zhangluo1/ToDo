@@ -1,6 +1,7 @@
 package com.example.needtodo;
 
 import android.content.Intent;
+import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
@@ -27,6 +28,7 @@ public class TomatoClock extends AppCompatActivity {
     private ImageView resume;
     private ImageView skip;
     private MyCountDownTimer myCountDownTimer;
+    private MediaPlayer mediaPlayer;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -79,6 +81,7 @@ public class TomatoClock extends AppCompatActivity {
     private void reverseTimer(int Seconds) {
         countdown = findViewById(R.id.countdown);
         countdown.setOnClickListener(null);
+
         myCountDownTimer = new MyCountDownTimer(Seconds * 1000, 1000) {
             public void onTick(long millisUntilFinished) {
                 if (!isStop) {
@@ -90,7 +93,10 @@ public class TomatoClock extends AppCompatActivity {
             }
             public void onFinish() {
                 Toast.makeText(TomatoClock.this, "时间到啦！！！", Toast.LENGTH_SHORT).show();
+                runHintVoice();
                 countdown.setText("点击结束");
+                stop.setOnClickListener(null);
+                skip.setOnClickListener(null);
                 countdown.setOnClickListener(v -> {
                     finish();
                 });
@@ -139,11 +145,17 @@ public class TomatoClock extends AppCompatActivity {
         skip = findViewById(R.id.skip);
         skip.setOnClickListener(v -> {
             myCountDownTimer.pause();
+            runHintVoice();
+            stop.setOnClickListener(null);
+            skip.setOnClickListener(null);
             countdown.setText("点击结束");
             countdown.setOnClickListener(v1 -> {
                 finish();
             });
         });
     }
-
+    private void runHintVoice() {
+        mediaPlayer = MediaPlayer.create(this,R.raw.finish);
+        mediaPlayer.start();
+    }
 }

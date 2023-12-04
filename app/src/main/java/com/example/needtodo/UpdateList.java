@@ -5,4 +5,4 @@ public class UpdateList {
         this.toast = toast;
     }
     public String toast;
-}
+}//删除和置顶保存的Eventbus传送的信息类

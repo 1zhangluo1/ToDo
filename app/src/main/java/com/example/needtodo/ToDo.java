@@ -5,6 +5,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 
 import androidx.fragment.app.Fragment;
@@ -26,7 +27,10 @@ public class ToDo extends Fragment {
     private SwipeRefreshLayout swipeRefreshLayout;
     private RecyclerView recyclerView;
     private View view;
+    private ImageView imageView;
     private LinearLayout linearLayout;
+    private String backgroundTop = "#C5C1C1";
+    private String backgroundTopFalse = "#FDFCFC";
 
 
     @Override
@@ -41,33 +45,22 @@ public class ToDo extends Fragment {
     }
 
     private void initRefresh() {
-        this.swipeRefreshLayout = (SwipeRefreshLayout) this.view.findViewById(R.id.swipe_refresh);
-        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-            @Override
-            public void onRefresh() {
-                refreshThings();
-            }
-        });
+        this.swipeRefreshLayout = this.view.findViewById(R.id.swipe_refresh);
+        swipeRefreshLayout.setOnRefreshListener(() -> refreshThings());
     }
 
     private void refreshThings() {
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                try {
-                    Thread.sleep(1000);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-                getActivity().runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        initToDoLists();
-                        loadList();
-                        swipeRefreshLayout.setRefreshing(false);
-                    }
-                });
+        new Thread(() -> {
+            try {
+                Thread.sleep(1000);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
             }
+            getActivity().runOnUiThread(() -> {
+                initToDoLists();
+                loadList();
+                swipeRefreshLayout.setRefreshing(false);
+            });
         }).start();
     }
 
@@ -77,18 +70,20 @@ public class ToDo extends Fragment {
         long user_id = this_account.getId();
         List<ThingsList> topThings = LitePal.where("user_id = ? and isDone = ? and isOutDate = ? and setTop =?", String.valueOf(user_id), String.valueOf(0), String.valueOf(0), String.valueOf(1)).find(ThingsList.class);
         for (ThingsList tops : topThings) {
-            ToDoList top = new ToDoList(tops.getHeadline(), R.drawable.ic_todo, tops.getDeadline(), tops.getId());
+            ToDoList top = new ToDoList(tops.getHeadline(), R.drawable.ic_todo, tops.getDeadline(), backgroundTop,tops.getId());
             toDoListList.add(top);
         }
-        List<ThingsList> things = LitePal.where("user_id = ? and isDone = ? and isOutDate = ? and setTop =?", String.valueOf(user_id), String.valueOf(0), String.valueOf(0), String.valueOf(0)).find(ThingsList.class);
+        List<ThingsList> things = LitePal.where("user_id = ? and isDone = ? and isOutDate = ? and setTop =?", String.valueOf(user_id), String.valueOf(0), String.valueOf(0), String.valueOf(0)).order("deadline").find(ThingsList.class);
+        Log.d("tag",things.toString());
         for (ThingsList contents : things) {
-            ToDoList add = new ToDoList(contents.getHeadline(), R.drawable.ic_todo, contents.getDeadline(), contents.getId());
+            ToDoList add = new ToDoList(contents.getHeadline(), R.drawable.ic_todo, contents.getDeadline(),backgroundTopFalse ,contents.getId());
             toDoListList.add(add);
         }
     }
 
     private void loadList() {
-        recyclerView = (RecyclerView) this.view.findViewById(R.id.todo_list);
+        imageView = this.view.findViewById(R.id.empty_background);
+        recyclerView = this.view.findViewById(R.id.todo_list);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         ToDoListAdapter adapter = new ToDoListAdapter(toDoListList);
         recyclerView.setAdapter(adapter);
@@ -96,8 +91,7 @@ public class ToDo extends Fragment {
         long user_id = this_account.getId();
         ThingsList thingsList = LitePal.where("user_id = ? and isDone = ? and isOutDate = ?", String.valueOf(user_id), String.valueOf(0), String.valueOf(0)).findFirst(ThingsList.class);
         if (thingsList == null) {
-            Log.d("tag", "确实为空");
-            recyclerView.setBackgroundResource(R.drawable.empty_data);
+            imageView.setImageResource(R.drawable.empty_data);
         }
     }
 

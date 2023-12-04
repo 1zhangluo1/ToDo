@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
+    <uses-permission android:name="android.permission.DISABLE_KEYGUARD"></uses-permission>
 
     <application
         android:name="org.litepal.LitePalApplication"
@@ -16,10 +17,8 @@
         android:theme="@style/Theme.NeedToDo"
         tools:targetApi="31">
         <activity
-            android:name=".DefineSelf"
-            android:exported="false"
-            android:label="自定义时间"
-            android:theme="@style/Theme.AppCompat.Dialog"/>
+            android:name=".Search"
+            android:exported="false" />
         <activity
             android:name=".SetTime"
             android:exported="false"

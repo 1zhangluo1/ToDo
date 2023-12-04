@@ -1,9 +1,11 @@
 package com.example.needtodo;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -24,11 +26,13 @@ public class HadDoneList extends Fragment{
     private List<ToDoList>doneList = new ArrayList<>();
     private RecyclerView recyclerView;
     private SwipeRefreshLayout swipeRefreshLayout;
+    private ImageView imageView;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         this.view = inflater.inflate(R.layout.fragment_had_done_list, container, false);
+        imageView = this.view.findViewById(R.id.done_empty_background);
         EventBus.getDefault().register(this);
         initRefresh();
         initDoneList();
@@ -36,11 +40,18 @@ public class HadDoneList extends Fragment{
         return this.view;
     }
     private void createDoneList() {
-        RecyclerView recyclerView = (RecyclerView) this.view.findViewById(R.id.done_list);
+        RecyclerView recyclerView = this.view.findViewById(R.id.done_list);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity());
         recyclerView.setLayoutManager(linearLayoutManager);
         DoneAdapter adapter = new DoneAdapter(doneList);
         recyclerView.setAdapter(adapter);
+        User this_account = LitePal.select("id").where("online = ?", String.valueOf(1)).findFirst(User.class);
+        long user_id = this_account.getId();
+        ThingsList thingsList = LitePal.where("user_id = ? and isDone = ? ", String.valueOf(user_id), String.valueOf(1)).findFirst(ThingsList.class);
+        if (thingsList == null) {
+            Log.d("tag", "确实为空");
+            imageView.setImageResource(R.drawable.empty_data);
+        } else {imageView.setImageResource(0);}
     }
     private void initDoneList() {
         doneList.clear();
@@ -53,33 +64,22 @@ public class HadDoneList extends Fragment{
         }
     }
     private void initRefresh() {
-        this.swipeRefreshLayout = (SwipeRefreshLayout) this.view.findViewById(R.id.swipe_refresh3);
-        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-            @Override
-            public void onRefresh() {
-                refreshThings();
-            }
-        });
+        this.swipeRefreshLayout = this.view.findViewById(R.id.swipe_refresh3);
+        swipeRefreshLayout.setOnRefreshListener(() -> refreshThings());
     }
 
     private void refreshThings() {
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                try {
-                    Thread.sleep(1000);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-                getActivity().runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        initDoneList();
-                        createDoneList();
-                        swipeRefreshLayout.setRefreshing(false);
-                    }
-                });
+        new Thread(() -> {
+            try {
+                Thread.sleep(1000);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
             }
+            getActivity().runOnUiThread(() -> {
+                initDoneList();
+                createDoneList();
+                swipeRefreshLayout.setRefreshing(false);
+            });
         }).start();
     }
     @Override

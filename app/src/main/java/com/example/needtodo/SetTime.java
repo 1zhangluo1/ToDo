@@ -34,6 +34,7 @@ public class SetTime extends AppCompatActivity {
                     Toast.makeText(this, "输入的时间不在范围内，单次最多300分钟", Toast.LENGTH_SHORT).show();
                 }
             } else {
+                Toast.makeText(this, "还未设置时间", Toast.LENGTH_SHORT).show();
             }
         });
     }

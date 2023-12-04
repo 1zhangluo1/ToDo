@@ -3,15 +3,21 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <item
+        android:id="@+id/change_view"
+        android:icon="@drawable/ic_change_to_selection_modern"
+        android:title="分类模式"
+        app:showAsAction="ifRoom"/>
+
+    <item
         android:id="@+id/backHome"
         android:icon="@drawable/ic_backhome"
         android:title="结束应用"
         app:showAsAction="always"/>
 
     <item
-        android:id="@+id/add"
-        android:icon="@drawable/ic_add"
-        android:title="添加事项"
+        android:id="@+id/search"
+        android:icon="@drawable/ic_search"
+        android:title="搜索"
         app:showAsAction="always"/>
 
 </menu>

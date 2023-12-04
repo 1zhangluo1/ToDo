@@ -23,6 +23,7 @@ import androidx.lifecycle.LifecycleObserver;
 import androidx.viewpager2.widget.ViewPager2;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationBarView;
 import com.google.android.material.navigation.NavigationView;
 
@@ -40,6 +41,7 @@ public class MainActivity extends BaseActivity implements LifecycleObserver {
     private TextView sign;
     private BottomNavigationView bottomNavigationView;
     private ViewPager2 viewPager2;
+    private FloatingActionButton add;
 
 
     @Override
@@ -50,6 +52,7 @@ public class MainActivity extends BaseActivity implements LifecycleObserver {
         adapterToolbar();//将顶部导航栏颜色设为和toolbar一致，看起来更加协调
         initNavMenu();//设置侧滑菜单的点击事件
         viewPaperFragment();
+        addThing();
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -67,15 +70,12 @@ public class MainActivity extends BaseActivity implements LifecycleObserver {
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        Intent intent = getIntent();
-        String thisAccount = intent.getStringExtra("this_account");
         if (item.getItemId() == android.R.id.home) {
             mDrawerLayout.openDrawer(GravityCompat.START);
         } else if (item.getItemId() == R.id.backHome) {
             exit();
-        } else if (item.getItemId() == R.id.add) {
-            intent = new Intent(MainActivity.this, AddThingList.class);
-            intent.putExtra("this_account", thisAccount);
+        } else if (item.getItemId() == R.id.search) {
+            Intent intent = new Intent(this, Search.class);
             startActivity(intent);
         }
         return true;
@@ -226,6 +226,13 @@ public class MainActivity extends BaseActivity implements LifecycleObserver {
                     bottomNavigationView.setSelectedItemId(R.id.enter_done);
                 }
             }
+        });
+    }
+    private void addThing () {
+        add = findViewById(R.id.fab);
+        add.setOnClickListener(v -> {
+            Intent intent = new Intent(MainActivity.this, AddThingList.class);
+            startActivity(intent);
         });
     }
 }

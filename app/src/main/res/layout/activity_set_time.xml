@@ -1,21 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:orientation="vertical"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
-    <FrameLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:id="@+id/test"
-        android:layout_above="@+id/bottom_nav_view"/>
+    android:layout_width="500dp"
+    android:layout_height="100dp">
 
-    <com.google.android.material.bottomnavigation.BottomNavigationView
-        android:id="@+id/bottom_nav_view"
-        android:layout_width="match_parent"
+    <EditText
+        android:id="@+id/define_myself"
+        android:layout_width="280dp"
         android:layout_height="wrap_content"
-        android:background="#9FD6EF"
-        android:layout_alignParentBottom="true"
-        app:menu="@menu/bottom_menu" />
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="30dp"
+        android:inputType="number"
+        android:hint="输入倒计时分钟"
+        android:textSize="20dp" />
+
+
+    <Button
+        android:id="@+id/start_time"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/define_myself"
+        android:layout_marginLeft="300dp"
+        android:background="@android:color/transparent"
+        android:text="确定"
+        android:textColor="#62A513" />
 
 </RelativeLayout>
