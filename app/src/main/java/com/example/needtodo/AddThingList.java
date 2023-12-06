@@ -4,6 +4,7 @@ import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -25,11 +26,18 @@ public class AddThingList extends BaseActivity {
     private Calendar calendar;
     private ImageView back;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_thing_list);
+        Button button1 = findViewById(R.id.ooo);
+        button1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(AddThingList.this, Test.class);
+                startActivity(intent);
+            }
+        });
         back = findViewById(R.id.back_add);
         back.setOnClickListener(v -> finish());
         getDate();
@@ -50,7 +58,7 @@ public class AddThingList extends BaseActivity {
                 add.setToDefault("isOutDate");
                 add.setToDefault("isDone");
                 add.setToDefault("setTop");
-                add.setType(null);
+                add.setType("未分类");
                 user.getThingsListList().add(add);
                 add.save();
                 user.save();

@@ -2,9 +2,10 @@ package com.example.needtodo;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -22,50 +23,63 @@ public class QueryAndChange extends BaseActivity {
     private ImageView save;
     private ImageView delete;
     private ImageView tomatoTime;
+    private RadioGroup radioGroup;
+    private RadioButton radioButton;
+    private String id;
+    private int checkedId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_query_and_change);
+        radioGroup = findViewById(R.id.choose_type);
         title = findViewById(R.id.headline);
-        ToDoList toDoList=this.getIntent().getParcelableExtra("content");
-        title.setText(toDoList.getThing());
-        String id = String.valueOf(toDoList.getId());
-        Log.d("MY ID",id);
-        ThingsList showThing = LitePal.where("id = ?",String.valueOf(toDoList.getId())).findFirst(ThingsList.class);
+        if (this.getIntent().getParcelableExtra("content") != null) {
+            ToDoList toDoList = this.getIntent().getParcelableExtra("content");
+            id = String.valueOf(toDoList.getId());
+        } else if (this.getIntent().getParcelableExtra("selection") != null) {
+            Selection.SingleSelection point_id = this.getIntent().getParcelableExtra("selection");
+            id = String.valueOf(point_id.getId());
+        }
+        ThingsList showThing = LitePal.where("id = ?", id).findFirst(ThingsList.class);
+        title.setText(showThing.getHeadline());
         text = findViewById(R.id.text);
         text.setText(showThing.getThings());
-        Log.d("tag",showThing.toString());
         deadline = findViewById(R.id.deadline);
         deadline.setText(Objects.toString(showThing.getDeadline()));
         back = findViewById(R.id.back);
         back.setOnClickListener(v -> finish());
         delete = findViewById(R.id.delete1);
         delete.setOnClickListener(v -> {
-            LitePal.deleteAll(ThingsList.class,"id = ?",String.valueOf(toDoList.getId()));
+            LitePal.deleteAll(ThingsList.class, "id = ?", id);
             EventBus.getDefault().post(new UpdateList("删除成功"));
             Toast.makeText(QueryAndChange.this, "删除成功", Toast.LENGTH_SHORT).show();
             finish();
         });
         save = findViewById(R.id.save_new);
         save.setOnClickListener(v -> {
+            checkedId = radioGroup.getCheckedRadioButtonId();
+            radioButton = findViewById(checkedId);
+            String type = radioButton.getText().toString();
             String headline = title.getText().toString();
             String content = text.getText().toString();
             ThingsList update = new ThingsList();
             update.setHeadline(headline);
             update.setThings(content);
-            update.updateAll("id = ?",String.valueOf(toDoList.getId()));
+            update.setType(type);
+            update.updateAll("id = ?", String.valueOf(id));
+            EventBus.getDefault().post(new UpdateList("修改成功"));
             Toast.makeText(QueryAndChange.this, "修改成功", Toast.LENGTH_SHORT).show();
-            EventBus.getDefault().post(new UpdateList("删除成功"));
             finish();
         });
-        enterTomato(toDoList);
+        enterTomato(id);
     }
-    private void enterTomato(ToDoList toDoList){
+
+    private void enterTomato(String id) {
         tomatoTime = findViewById(R.id.tomatoClock);
         tomatoTime.setOnClickListener(v -> {
             Intent intent = new Intent(this, TomatoClock.class);
-            intent.putExtra("thingsToSetClock",toDoList);
+            intent.putExtra("thingsToSetClock", id);
             startActivity(intent);
         });
     }

@@ -13,6 +13,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
+import org.litepal.LitePal;
 
 import java.util.Random;
 
@@ -37,13 +38,13 @@ public class TomatoClock extends AppCompatActivity {
         stop = findViewById(R.id.stopOrResume);
         stop.setImageResource(R.drawable.ic_stop);
         EventBus.getDefault().register(this);
-        ToDoList toDoList = this.getIntent().getParcelableExtra("thingsToSetClock");
+        String id = this.getIntent().getStringExtra("thingsToSetClock");
         back();
-        initBackGround(toDoList);
+        initBackGround(id);
         start();
     }
 
-    private void initBackGround(ToDoList toDoList) {
+    private void initBackGround(String id) {
         imageId[0] = R.drawable.tomato1;
         imageId[1] = R.drawable.tomato2;
         imageId[2] = R.drawable.tomato3;
@@ -56,7 +57,8 @@ public class TomatoClock extends AppCompatActivity {
         imageId[9] = R.drawable.tomato10;
         setBack(imageId);
         focus_thing = findViewById(R.id.focus_thing);
-        focus_thing.setText(toDoList.getThing());
+        ThingsList background = LitePal.where("id = ?",id).findFirst(ThingsList.class);
+        focus_thing.setText(background.getHeadline());
     }
 
     private void setBack(int[] imageId) {

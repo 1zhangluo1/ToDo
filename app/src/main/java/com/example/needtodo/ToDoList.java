@@ -10,6 +10,21 @@ public class ToDoList implements Parcelable {
     private int backImage;
     private String backgroundColor;
     private long id;
+    private String type;
+
+    public ToDoList(String thing, long id, String type) {
+        this.thing = thing;
+        this.id = id;
+        this.type = type;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
 
     public ToDoList(String thing, String deadline, long id) {
         this.thing = thing;
@@ -129,4 +144,5 @@ public class ToDoList implements Parcelable {
                 ", id=" + id +
                 '}';
     }
+
 }

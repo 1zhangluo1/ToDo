@@ -16,6 +16,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.NeedToDo"
         tools:targetApi="31">
+
+        <activity android:name=".Test"
+            android:exported="false"/>
         <activity
             android:name=".Search"
             android:exported="false" />
