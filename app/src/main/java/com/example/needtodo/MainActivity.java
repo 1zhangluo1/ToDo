@@ -24,7 +24,6 @@ import androidx.viewpager2.widget.ViewPager2;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.android.material.navigation.NavigationBarView;
 import com.google.android.material.navigation.NavigationView;
 
 import org.greenrobot.eventbus.EventBus;
@@ -42,7 +41,6 @@ public class MainActivity extends BaseActivity implements LifecycleObserver {
     private BottomNavigationView bottomNavigationView;
     private ViewPager2 viewPager2;
     private FloatingActionButton add;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -76,6 +74,9 @@ public class MainActivity extends BaseActivity implements LifecycleObserver {
             exit();
         } else if (item.getItemId() == R.id.search) {
             Intent intent = new Intent(this, Search.class);
+            startActivity(intent);
+        } else if (item.getItemId() == R.id.change_view) {
+            Intent intent = new Intent(this, SelectionModern.class);
             startActivity(intent);
         }
         return true;
@@ -197,20 +198,17 @@ public class MainActivity extends BaseActivity implements LifecycleObserver {
         bottomNavigationView = findViewById(R.id.bottom_nav_view);
         MyViewPaper2BottomAdapter myViewPaper2BottomAdapter = new MyViewPaper2BottomAdapter(this);
         viewPager2.setAdapter(myViewPaper2BottomAdapter);
-        bottomNavigationView.setOnItemSelectedListener(new NavigationBarView.OnItemSelectedListener() {
-            @Override
-            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-                if (item.getItemId()==R.id.todo_view){
-                    viewPager2.setCurrentItem(0);
-                }
-                else if (item.getItemId()==R.id.enter_out){
-                    viewPager2.setCurrentItem(1);
-                }
-                else if (item.getItemId()==R.id.enter_done){
-                    viewPager2.setCurrentItem(2);
-                }
-                return true;
+        bottomNavigationView.setOnItemSelectedListener(item -> {
+            if (item.getItemId()==R.id.todo_view){
+                viewPager2.setCurrentItem(0);
             }
+            else if (item.getItemId()==R.id.enter_out){
+                viewPager2.setCurrentItem(1);
+            }
+            else if (item.getItemId()==R.id.enter_done){
+                viewPager2.setCurrentItem(2);
+            }
+            return true;
         });
         viewPager2.registerOnPageChangeCallback(new ViewPager2.OnPageChangeCallback() {
             @Override

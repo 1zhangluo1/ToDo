@@ -37,7 +37,7 @@ public class QueryAndChange extends BaseActivity {
         if (this.getIntent().getParcelableExtra("content") != null) {
             ToDoList toDoList = this.getIntent().getParcelableExtra("content");
             id = String.valueOf(toDoList.getId());
-        } else if (this.getIntent().getParcelableExtra("selection") != null) {
+        } if (this.getIntent().getParcelableExtra("selection") != null) {
             Selection.SingleSelection point_id = this.getIntent().getParcelableExtra("selection");
             id = String.valueOf(point_id.getId());
         }

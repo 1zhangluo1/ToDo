@@ -6,7 +6,7 @@ import androidx.fragment.app.FragmentActivity;
 import androidx.viewpager2.adapter.FragmentStateAdapter;
 
 public class MyViewPaper2BottomAdapter extends FragmentStateAdapter {
-
+    boolean isSelect = false;
     public MyViewPaper2BottomAdapter(@NonNull FragmentActivity fragmentActivity) {
         super(fragmentActivity);
     }

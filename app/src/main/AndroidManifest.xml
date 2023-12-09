@@ -17,7 +17,7 @@
         android:theme="@style/Theme.NeedToDo"
         tools:targetApi="31">
 
-        <activity android:name=".Test"
+        <activity android:name=".SelectionModern"
             android:exported="false"/>
         <activity
             android:name=".Search"

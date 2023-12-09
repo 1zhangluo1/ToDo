@@ -4,7 +4,6 @@ import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -30,14 +29,6 @@ public class AddThingList extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_thing_list);
-        Button button1 = findViewById(R.id.ooo);
-        button1.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(AddThingList.this, Test.class);
-                startActivity(intent);
-            }
-        });
         back = findViewById(R.id.back_add);
         back.setOnClickListener(v -> finish());
         getDate();
