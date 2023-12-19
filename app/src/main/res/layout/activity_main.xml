@@ -38,6 +38,19 @@
             app:backgroundTint="#46CBF8"
             app:elevation="10dp" />
 
+        <movableButton.MoveButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_above="@id/bottom_nav_view"
+            android:layout_alignParentLeft="true"
+            android:id="@+id/chat"
+            android:layout_margin="18dp"
+            android:src="@drawable/ic_chatgpt"
+            android:backgroundTint="?colorPrimary"
+            app:maxImageSize="35dp"
+            app:elevation="15dp" />
+
+
             <com.google.android.material.bottomnavigation.BottomNavigationView
                 android:id="@+id/bottom_nav_view"
                 android:layout_width="match_parent"

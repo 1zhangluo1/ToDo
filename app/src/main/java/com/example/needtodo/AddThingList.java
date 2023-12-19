@@ -6,7 +6,9 @@ import android.os.Bundle;
 import android.util.Log;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageView;
+import android.widget.ImageButton;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -19,20 +21,24 @@ import java.util.Date;
 public class AddThingList extends BaseActivity {
     private EditText thingEditText;
     private EditText headlineEditText;
-    private EditText deadlineEditText;
+    private EditText fillDeadline;
     private TextView enterDate;
     private int year,month,day;
     private Calendar calendar;
-    private ImageView back;
+    private ImageButton back;
+    private RadioGroup radioGroup;
+    private int checkId = 0;
+    private RadioButton radioButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_thing_list);
+        radioGroup = findViewById(R.id.first_choose_type);
         back = findViewById(R.id.back_add);
         back.setOnClickListener(v -> finish());
         getDate();
-        EditText fillDeadline = findViewById(R.id.fill_deadline);
+        fillDeadline = findViewById(R.id.fill_deadline);
         thingEditText = findViewById(R.id.add_thing);
         headlineEditText = findViewById(R.id.add_headline);
         Button button = findViewById(R.id.add_yes);
@@ -40,7 +46,11 @@ public class AddThingList extends BaseActivity {
             String thing = thingEditText.getText().toString();
             String headline = headlineEditText.getText().toString();
             String deadline = fillDeadline.getText().toString();
-            if(thing.isEmpty()==false&&headline.isEmpty()==false&&deadline.isEmpty()==false){
+            String type = null;
+            checkId = radioGroup.getCheckedRadioButtonId();
+            if(!thing.isEmpty()&&!headline.isEmpty()&&!deadline.isEmpty()&&checkId != -1){
+                radioButton = findViewById(checkId);
+                type = radioButton.getText().toString();
                 User user = LitePal.where("online = ?",String.valueOf(1)).findFirst(User.class);
                 ThingsList add = new ThingsList();
                 add.setThings(thing);
@@ -49,7 +59,7 @@ public class AddThingList extends BaseActivity {
                 add.setToDefault("isOutDate");
                 add.setToDefault("isDone");
                 add.setToDefault("setTop");
-                add.setType("未分类");
+                add.setType(type);
                 user.getThingsListList().add(add);
                 add.save();
                 user.save();
@@ -58,11 +68,14 @@ public class AddThingList extends BaseActivity {
                 Intent intent1 = new Intent(AddThingList.this, MainActivity.class);
                 startActivity(intent1);
         }
-         else if(thing.isEmpty()==true || headline.isEmpty()==true) {
+         else if(thing.isEmpty() || headline.isEmpty()) {
                 Toast.makeText(AddThingList.this, "事件和标题不能为空", Toast.LENGTH_SHORT).show();
          }
-         else if (deadline.isEmpty()==true){
+         else if (deadline.isEmpty()){
                 Toast.makeText(AddThingList.this, "无截止时间", Toast.LENGTH_SHORT).show();
+            }
+         else if (checkId == -1) {
+                Toast.makeText(this, "还未选择类别", Toast.LENGTH_SHORT).show();
             }
         });
 

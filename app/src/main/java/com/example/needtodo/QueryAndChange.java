@@ -47,6 +47,24 @@ public class QueryAndChange extends BaseActivity {
         text.setText(showThing.getThings());
         deadline = findViewById(R.id.deadline);
         deadline.setText(Objects.toString(showThing.getDeadline()));
+        ThingsList thisType = LitePal.where("id = ?",id).findFirst(ThingsList.class);
+        String defaultType = thisType.getType().toString();
+        if (defaultType.equals("学习")){
+            radioButton = findViewById(R.id.study);
+            radioGroup.check(radioButton.getId());
+        } else if (defaultType.equals("工作")) {
+            radioButton = findViewById(R.id.work);
+            radioGroup.check(radioButton.getId());
+        } else if (defaultType.equals("生活")) {
+            radioButton = findViewById(R.id.life);
+            radioGroup.check(radioButton.getId());
+        } else if (defaultType.equals("家庭")) {
+            radioButton = findViewById(R.id.family);
+            radioGroup.check(radioButton.getId());
+        } else if (defaultType.equals("其它")) {
+            radioButton = findViewById(R.id.selection_false);
+            radioGroup.check(radioButton.getId());
+        }
         back = findViewById(R.id.back);
         back.setOnClickListener(v -> finish());
         delete = findViewById(R.id.delete1);

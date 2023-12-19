@@ -1,5 +1,8 @@
+import org.jetbrains.kotlin.ir.backend.js.compile
+
 plugins {
     id("com.android.application")
+    id("org.jetbrains.kotlin.android")
 }
 
 android {
@@ -32,11 +35,23 @@ android {
     buildFeatures {
         viewBinding = true
     }
+    kotlinOptions {
+        jvmTarget = "1.8"
+    }
 
 }
 
 dependencies {
 
+    implementation ("androidx.core:core-ktx:1.7.0")
+    implementation ("com.tbruyelle.rxpermissions2:rxpermissions:0.9.4@aar")
+    implementation ("io.reactivex.rxjava2:rxandroid:2.0.2")
+    implementation ("io.reactivex.rxjava2:rxjava:2.0.0")
+    implementation ("com.github.bumptech.glide:glide:4.11.0")
+    annotationProcessor ("com.github.bumptech.glide:compiler:4.11.0")
+    implementation("com.squareup.okhttp3:logging-interceptor:4.11.0")
+    implementation ("com.google.code.gson:gson:2.10.1")
+    implementation("com.squareup.okhttp3:okhttp:4.9.3")
     implementation ("com.google.android.material:material:<version>")
     implementation ("androidx.lifecycle:lifecycle-viewmodel-ktx:2.4.0")
     implementation ("com.google.android.material:material:1.2.0")

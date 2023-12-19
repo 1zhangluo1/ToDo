@@ -130,7 +130,7 @@
             <RadioButton
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="未分类"
+                android:text="其它"
                 android:id="@+id/selection_false"
                 android:checked="false"
                 android:layout_margin="7dp"/>

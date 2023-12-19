@@ -22,7 +22,7 @@ import java.util.List;
 
 public class HadDoneList extends Fragment{
     private View view;
-    private DoneAdapter doneAdapter;
+    private DoneAdapter adapter;
     private List<ToDoList>doneList = new ArrayList<>();
     private RecyclerView recyclerView;
     private SwipeRefreshLayout swipeRefreshLayout;
@@ -40,10 +40,10 @@ public class HadDoneList extends Fragment{
         return this.view;
     }
     private void createDoneList() {
-        RecyclerView recyclerView = this.view.findViewById(R.id.done_list);
+        recyclerView = this.view.findViewById(R.id.done_list);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity());
         recyclerView.setLayoutManager(linearLayoutManager);
-        DoneAdapter adapter = new DoneAdapter(doneList);
+        adapter = new DoneAdapter(doneList);
         recyclerView.setAdapter(adapter);
         User this_account = LitePal.select("id").where("online = ?", String.valueOf(1)).findFirst(User.class);
         long user_id = this_account.getId();
