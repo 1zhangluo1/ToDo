@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <litepal>
     <dbname value="ToDoList" />
-    <version value="11"/>
+    <version value="14"/>
     <!--
     	Define the database name of your application.
     	By default each database name should be end with .db.
